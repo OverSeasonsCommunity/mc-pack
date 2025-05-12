@@ -34,7 +34,7 @@ jobs:
           mkdir assets/minecraft
           mkdir assets/minecraft/textures
           mkdir assets/minecraft/models
-          rsync -a ../../dhs/textures/ assets/minecraft/textures/
+          rsync -a ../../creative/textures/ assets/minecraft/textures/
           rsync -a ../../merch/models/block/ assets/minecraft/models/block/
           rsync -a ../../creative/models/creative/ assets/minecraft/models/creative/
           rsync -a ../../merch/textures/ assets/minecraft/textures/
