@@ -89,7 +89,7 @@ jobs:
           mv creativepack_converted.zip ../../complete/creativepack-1.21.2.zip
           cd ../../../
 
-          cp -r working/convert/template working/convert/1_21_4
+          cp -r working/convert/template working/convert/1_21_1
           cd working/convert/1_21_1/
           java -jar ../../../ResourcePackConverter-Console-*.jar --from 1.15.2 --to 1.21.1 --minify
           rm hubpack.zip
