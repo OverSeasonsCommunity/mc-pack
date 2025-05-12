@@ -1,0 +1,106 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ release ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Set up Creative
+        run: |
+          mkdir working
+          mkdir working/creative
+          mkdir working/complete
+          mkdir working/complete/creative
+          cd working/creative
+          mkdir assets
+          mkdir assets/minecraft
+          mkdir assets/minecraft/textures
+          mkdir assets/minecraft/models
+          rsync -a ../../dhs/textures/ assets/minecraft/textures/
+          rsync -a ../../merch/models/block/ assets/minecraft/models/block/
+          rsync -a ../../creative/models/creative/ assets/minecraft/models/creative/
+          rsync -a ../../merch/textures/ assets/minecraft/textures/
+          rsync -a ../../merch/models/merch/ assets/minecraft/models/merch/
+          rsync -a ../../creative/models/default/ assets/minecraft/models/item/
+          rsync -a ../../merch/models/default/ assets/minecraft/models/item/
+          cp -avr ../../pack.mcmeta pack.mcmeta
+          cp -avr ../../pack.png pack.png
+          zip -r creativepack.zip assets pack.mcmeta pack.png
+          mv pack.mcmeta ../complete/creative
+          mv pack.png ../complete/creative
+          rsync -a assets/ ../complete/creative/assets/
+          cd /
+     
+      - uses: actions/upload-artifact@v4
+        with:
+         name: creativepack
+         path: working/complete/creative
+         retention-days: 90
+         
+      - name: Set up HUB
+        run: |
+          mkdir working/hub
+          mkdir working/complete/hub
+          cd working/hub
+          mkdir assets
+          mkdir assets/minecraft
+          mkdir assets/minecraft/textures
+          mkdir assets/minecraft/models
+          rsync -a ../../merch/models/block/ assets/minecraft/models/block/
+          rsync -a ../../merch/textures/ assets/minecraft/textures/
+          rsync -a ../../merch/models/merch/ assets/minecraft/models/merch/
+          rsync -a ../../merch/models/default/ assets/minecraft/models/item/
+          cp -avr ../../pack.mcmeta pack.mcmeta
+          cp -avr ../../pack.png pack.png
+          zip -r hubpack.zip assets pack.mcmeta pack.png
+          mv pack.mcmeta ../complete/hub
+          mv pack.png ../complete/hub
+          rsync -a assets/ ../complete/hub/assets/
+          cd /
+     
+      - uses: actions/upload-artifact@v4
+        with:
+         name: hubpack
+         path: working/complete/hub
+         retention-days: 90
+      
+      - name: Move packs
+        run: |
+          mv working/hub/hubpack.zip working/complete/hubpack.zip
+          mv working/creative/creativepack.zip working/complete/creativepack.zip
+          # Runs a set of commands using the runners shell
+         
+     # - name: Web Server Upload
+      #  env: 
+       #   FTP_SERVER: ${{ secrets.FTP_SERVER}}
+        #  FTP_PASSWORD: ${{ secrets.FTP_PASSWORD}}
+       # run: |
+        
+          #cd working/complete
+          #ftp -p -inv $FTP_SERVER << EOF
+          #user github $FTP_PASSWORD
+          #delete creativepack.zip
+          #delete hubpack.zip
+          #binary
+          #put creativepack.zip
+          #put hubpack.zip
+          #bye
+          #EOF
