@@ -7,8 +7,10 @@ mkdir -p working/{creative,complete/creative}
 cd working/creative || exit
 
 mkdir -p assets/minecraft/{textures,models}
-rsync -a ../../merch/models/block assets/minecraft/models/block
-rsync -a ../../merch/textures/ assets/minecraft/textures
+rsync -a ../../creative/models/block assets/minecraft/models/block
+rsync -a ../../creatve/textures/ assets/minecraft/textures
+rsync -a ../../common/models/block assets/minecraft/models/block
+rsync -a ../../common/textures/ assets/minecraft/textures
 cp ../../pack.mcmeta pack.mcmeta
 cp ../../pack.png pack.png
 
@@ -19,8 +21,10 @@ mkdir -p working/{hub,complete/hub}
 cd working/hub || exit
 
 mkdir -p assets/minecraft/{textures,models}
-rsync -a ../../merch/models/block assets/minecraft/models/block
-rsync -a ../../merch/textures/ assets/minecraft/textures
+rsync -a ../../hub/models/block assets/minecraft/models/block
+rsync -a ../../hub/textures/ assets/minecraft/textures
+rsync -a ../../common/models/block assets/minecraft/models/block
+rsync -a ../../common/textures/ assets/minecraft/textures
 cp ../../pack.mcmeta pack.mcmeta
 cp ../../pack.png pack.png
 
