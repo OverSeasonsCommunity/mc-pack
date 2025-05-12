@@ -114,7 +114,7 @@ jobs:
           prerelease: false
 
       - name: Upload Hub Release
-        id: upload-gui-release
+        id: upload-hub-release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -125,7 +125,7 @@ jobs:
           asset_content_type: application/zip
 
       - name: Upload Creative Release
-        id: upload-gui-release
+        id: upload-creative-release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
