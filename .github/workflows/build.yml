@@ -51,6 +51,8 @@ jobs:
 
           mkdir -p assets/minecraft/{textures,models}
           rsync -a ../../hub/models/block assets/minecraft/models/block
+          rsync -a ../../hub/models/vehicles assets/minecraft/models/vehicles
+          rsync -a ../../hub/models/default assets/minecraft/models/item
           rsync -a ../../hub/textures/ assets/minecraft/textures
           rsync -a ../../common/models/block assets/minecraft/models/block
           rsync -a ../../common/textures/ assets/minecraft/textures
@@ -82,7 +84,7 @@ jobs:
 
           cp -r working/convert/template working/convert/1_21_2
           cd working/convert/1_21_2/
-          java -jar ../../../ResourcePackConverter-Console-*.jar --from 1.15.2 --to 1.21.4 --minify
+          java -jar ../../../ResourcePackConverter-Console-*.jar --from 1.15.2 --to 1.21.2 --minify
           rm hubpack.zip
           rm creativepack.zip
           mv hubpack_converted.zip ../../complete/hubpack-1.21.2.zip
