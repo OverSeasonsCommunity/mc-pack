@@ -51,8 +51,10 @@ jobs:
 
           mkdir -p assets/minecraft/{textures,models}
           rsync -a ../../hub/models/block assets/minecraft/models/block
+          rsync -a ../../hub/models/vehicles assets/minecraft/models/
+          mkdir -p assets/minecraft/models/item
+          cp -r ../../hub/models/default/* assets/minecraft/models/item/
           rsync -a ../../hub/models/vehicles assets/minecraft/models/vehicles
-          rsync -a ../../hub/models/default assets/minecraft/models/item
           rsync -a ../../hub/textures/ assets/minecraft/textures
           rsync -a ../../common/models/block assets/minecraft/models/block
           rsync -a ../../common/textures/ assets/minecraft/textures
