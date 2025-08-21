@@ -71,10 +71,20 @@ jobs:
           mv working/creative/creativepack.zip working/complete/creativepack.zip
           mkdir -p working/convert/template
           cp working/complete/*.zip working/convert/template
-          wget https://jenkins.dc1.agentdid127.com/job/agentdid127/job/ResourcePackConverter/job/dev%252F1.21.4/lastSuccessfulBuild/artifact/Applications/Console/target/ResourcePackConverter-Console-2.2.5.jar
-      
+          wget https://github.com/agentdid127/ResourcePackConverter/releases/download/2.2.6/ResourcePackConverter.jar
+          mv ResourcePackConverter.jar ResourcePackConverter-Console-2.2.6.jar
+  
       - name: Convert Packs
         run: |
+          cp -r working/convert/template working/convert/1_21_7
+          cd working/convert/1_21_7/
+          java -jar ../../../ResourcePackConverter-Console-*.jar --from 1.15.2 --to 1.21.7 --minify
+          rm hubpack.zip
+          rm creativepack.zip
+          mv hubpack_converted.zip ../../complete/hubpack-1.21.7.zip
+          mv creativepack_converted.zip ../../complete/creativepack-1.21.7.zip
+          cd ../../../
+          
           cp -r working/convert/template working/convert/1_21_4
           cd working/convert/1_21_4/
           java -jar ../../../ResourcePackConverter-Console-*.jar --from 1.15.2 --to 1.21.4 --minify
@@ -110,6 +120,8 @@ jobs:
           mv hubpack_converted.zip ../../complete/hubpack-1.20.4.zip
           mv creativepack_converted.zip ../../complete/creativepack-1.20.4.zip
           cd ../../../
+
+          
       - name: Set up targets
         run: |
           mv working/complete .
